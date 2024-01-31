@@ -71,18 +71,20 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
         int index = v.getId() - ID_PREFIX;
         if (index != currentIndex) {
-            View from = findViewById(currentIndex + ID_PREFIX);
-            View to = findViewById(index + ID_PREFIX);
-            if (from != null) {
-                from.setSelected(false);
+            boolean switched = listener.onTabItemClick(index, tabs.get(v.getId() - ID_PREFIX));
+            if (switched) {
+                View from = findViewById(currentIndex + ID_PREFIX);
+                View to = findViewById(index + ID_PREFIX);
+                if (from != null) {
+                    from.setSelected(false);
+                }
+                to.setSelected(true);
+                currentIndex = index;
             }
-            to.setSelected(true);
-            currentIndex = index;
-            listener.onTabItemClick(index, tabs.get(v.getId() - ID_PREFIX));
         }
     }
 
     public interface OnTabClickListener {
-        void onTabItemClick(int currentIndex, BaseTab tab);
+        boolean onTabItemClick(int currentIndex, BaseTab tab);
     }
 }
