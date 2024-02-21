@@ -24,6 +24,14 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabClickListener {
 
         tabs.add(
             TabView.Tab.Builder()
+                .setImgResId(R.drawable.selector_tab_project_btn)
+                .setLabelResId(R.string.tab_find)
+                .setLabelColorResId(R.color.selector_tab_label)
+                .setClazz(null)
+                .builder()
+        )
+        tabs.add(
+            TabView.Tab.Builder()
                 .setImgResId(R.drawable.selector_tab_mine_btn)
                 .setLabelResId(R.string.tab_me)
                 .setLabelColorResId(R.color.selector_tab_label)
@@ -34,11 +42,17 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabClickListener {
         mTabLayout.setCurrentTab(0)
     }
 
-    override fun onTabItemClick(currentIndex: Int, tab: BaseTab?): Boolean {
+    override fun onTabItemClick(currentIndex: Int): Boolean {
         if (currentIndex == 1) {
             Toast.makeText(this, "先登录", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
+    }
+
+    override fun onTabSwitched(newIndex: Int, oldIndex: Int) {
+        Toast.makeText(this,
+            "onTabSwitched new:${newIndex} old:${oldIndex}",
+            Toast.LENGTH_SHORT).show()
     }
 }
